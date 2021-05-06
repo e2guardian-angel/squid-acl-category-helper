@@ -8,3 +8,7 @@ This program is part of the e2guardian-angel project and interfaces with the gua
 
 https://github.com/e2guardian-angel/guardian-angel
 
+## Environment variables
+Before running, you must define the following environment variables:
+* GUARDIAN_HOST - hostname/ip of guardian-angel instance
+* GUARDIAN_PORT - port that guardian-angel is running on
