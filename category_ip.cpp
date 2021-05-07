@@ -7,28 +7,31 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <fstream>
 #include "restclient-cpp/restclient.h"
 #include "json/json.h"
 
 using namespace std;
+const CONFIG_PATH = "/opt/guardian/helper.conf";
 
 int main(int argc, char **argv) {
 
   /*
-   * Get guardian-angel host and port from environment variables
+   * Get guardian-angel host and port from config file
    */
-  const char* hostCstr = getenv("GUARDIAN_HOST");
-  const char* portCstr = getenv("GUARDIAN_PORT");
-  if (hostCstr == NULL || portCstr == NULL) {
-    cerr << "ERROR: Must set GUARDIAN_HOST and GUARDIAN_PORT variables before running." << endl;
+  string configStr = readAllText(CONFIG_PATH);
+  if (configStr == "") {
+    cerr << "Must provide a valid config file in " + CONFIG_PATH;
     return -1;
   }
-  string host = string(hostCstr);
-  string port = string(portCstr);
+  
+  string host, port;
   try {
-    stoi(portCstr);
+    host = config["host"].asString();
+    port = config["port"].asString();
+    stoi(port.c_str());
   } catch (std::invalid_argument e) {
-    cerr << "ERROR: GUARDIAN_PORT is in invalid format, expected integer" << endl;
+    cerr << "ERROR: host and/or port are missing or invalid" << endl;
     return -1;
   }
 
@@ -47,11 +50,8 @@ int main(int argc, char **argv) {
     if (r.code != 200) {
       cout << "ERR" << endl;
     } else {
-      JSONCPP_STRING err;
-      Json::Value root;
-      std::istringstream jsonStream(r.body);
-      jsonStream >> root;
-      bool match = root["match"].asBool();
+      Json::Value responseJson = stringToJson(r.body);
+      bool match = responseJson["match"].asBool();
 
       if (match) {
 	cout << "OK" << endl;
