@@ -6,6 +6,7 @@
  */
 #include <iostream>
 #include <string>
+#include <sstream>
 #include "restclient-cpp/restclient.h"
 #include "json/json.h"
 
@@ -48,8 +49,8 @@ int main(int argc, char **argv) {
     } else {
       JSONCPP_STRING err;
       Json::Value root;
-      Json::Reader reader;
-      reader.parse(r.body, root);
+      std::istringstream jsonStream(r.body);
+      jsonStream >> root;
       bool match = root["match"].asBool();
 
       if (match) {
