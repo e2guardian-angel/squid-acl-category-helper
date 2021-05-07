@@ -12,25 +12,26 @@
 #include "category.h"
 
 using namespace std;
-const CONFIG_PATH = "/opt/guardian/helper.conf";
+const string CONFIG_PATH = "/opt/guardian/helper.conf";
 
 int main(int argc, char **argv) {
 
   /*
    * Get guardian-angel host and port from environment variables
    */
-    string configStr = readAllText(CONFIG_PATH);
+  string configStr = readAllText(CONFIG_PATH);
   if (configStr == "") {
     cerr << "Must provide a valid config file in " + CONFIG_PATH;
     return -1;
   }
-  
+
   string host, port;
   try {
+    Json::Value config = stringToJson(configStr);
     host = config["host"].asString();
     port = config["port"].asString();
     stoi(port.c_str());
-  } catch (std::invalid_argument e) {
+  } catch (std::exception e) {
     cerr << "ERROR: host and/or port are missing or invalid" << endl;
     return -1;
   }

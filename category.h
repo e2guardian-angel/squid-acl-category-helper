@@ -18,7 +18,7 @@ std::string readAllText(const std::string& path) {
   return contents;
 }
 
-Json::Value stringToJson(string arg) {
+Json::Value stringToJson(std::string arg) {
   Json::Value root;
   std::istringstream jsonStream(arg);
   jsonStream >> root;
