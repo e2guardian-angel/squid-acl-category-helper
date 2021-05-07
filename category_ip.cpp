@@ -22,7 +22,7 @@ int main(int argc, char **argv) {
    */
   string configStr = readAllText(CONFIG_PATH);
   if (configStr == "") {
-    cerr << "Must provide a valid config file in " + CONFIG_PATH;
+    cerr << "Must provide a valid config file in " + CONFIG_PATH << endl;
     return -1;
   }
   
