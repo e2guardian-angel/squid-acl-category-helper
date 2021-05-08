@@ -13,6 +13,7 @@
 
 using namespace std;
 const string CONFIG_PATH = "/opt/guardian/helper.conf";
+const int READ_BUFFER_SIZE = 1024;
 
 int main(int argc, char **argv) {
 
@@ -42,8 +43,12 @@ int main(int argc, char **argv) {
    * Main logic
    */
   while(1) {
+    char buffer[READ_BUFFER_SIZE];
     string category, hostname;
-    cin >> category >> hostname;
+    cin.getline(buffer, 1024, '\n');
+    stringstream ss(buffer);
+    ss >> category;
+    ss >> hostname;
     
     // Perform REST API
     RestClient::Response r = RestClient::post(CATEGORY_POST_URL, "application/json", "{\"hostname\":\"" + hostname + "\",\"category\":\"" + category +"\"}");
