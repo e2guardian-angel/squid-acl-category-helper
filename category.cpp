@@ -11,7 +11,6 @@
 #include <arpa/inet.h>
 #include "restclient-cpp/restclient.h"
 #include "json/json.h"
-#include "category.h"
 
 using namespace std;
 const string CONFIG_PATH = "/opt/guardian/helper.conf";
