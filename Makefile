@@ -1,11 +1,14 @@
-# compiler flags:
-# -lcurl
+# Makefile for category helper
 
-host_category_helper: category_host.cpp
-	g++ -o host_category_helper category_host.cpp /usr/lib/libjsoncpp.a /usr/local/lib/librestclient-cpp.a -lcurl
+all: category_helper
 
-ip_category_helper: category_ip.cpp
-	g++ -o ip_category_helper category_ip.cpp /usr/lib/libjsoncpp.a /usr/local/lib/librestclient-cpp.a -lcurl
+SQUID_HELPER_DIR=/usr/local/bin/squidhelpers
+
+category_helper: category.cpp
+	g++ -o category_helper category.cpp /usr/lib/libjsoncpp.a /usr/local/lib/librestclient-cpp.a -lcurl
+
+install:
+	mkdir -p $(SQUID_HERLPER_DIR) && cp category_helper $(SQUID_HELPER_DIR)
 
 clean:
-	rm ip_category_helper
+	rm category_helper
