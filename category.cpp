@@ -76,13 +76,13 @@ int main(int argc, char **argv) {
     ss >> dst;
 
     struct sockaddr_in sa;
-    RestClient::Response;
+    RestClient::Response r;
     if (inet_pton(AF_INET, dst.c_str(), &(sa.sin_addr))) {
       // dst is an IP address
-      r = RestClient::post(IP_CATEGORY_POST_URL, "application/json", "{\"ip\":\"" + ip + "\",\"category\":\"" + category +"\"}");
+      r = RestClient::post(IP_CATEGORY_POST_URL, "application/json", "{\"ip\":\"" + dst + "\",\"category\":\"" + category +"\"}");
     } else {
       // dst is a hostname
-      r = RestClient::post(HOST_CATEGORY_POST_URL, "application/json", "{\"hostname\":\"" + hostname + "\",\"category\":\"" + category +"\"}");
+      r = RestClient::post(HOST_CATEGORY_POST_URL, "application/json", "{\"hostname\":\"" + dst + "\",\"category\":\"" + category +"\"}");
     }
 
     if (r.code != 200) {
