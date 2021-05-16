@@ -13,7 +13,7 @@
 #include "json/json.h"
 
 using namespace std;
-const string CONFIG_PATH = "/opt/guardian/guardian.conf";
+const string CONFIG_PATH = "/opt/guardian/guardian.json";
 const int READ_BUFFER_SIZE = 1024;
 
 
