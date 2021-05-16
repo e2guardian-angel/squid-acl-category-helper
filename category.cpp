@@ -13,7 +13,7 @@
 #include "json/json.h"
 
 using namespace std;
-const string CONFIG_PATH = "/opt/guardian/helper.conf";
+const string CONFIG_PATH = "/opt/guardian/guardian.conf";
 const int READ_BUFFER_SIZE = 1024;
 
 
@@ -53,8 +53,9 @@ int main(int argc, char **argv) {
   string host, port;
   try {
     Json::Value config = stringToJson(configStr);
-    host = config["host"].asString();
-    port = config["port"].asString();
+    Json::Value helperConfig = config["helper"];
+    host = helperConfig["host"].asString();
+    port = helperConfig["port"].asString();
     stoi(port.c_str());
   } catch (std::exception e) {
     cerr << "ERROR: host and/or port are missing or invalid" << endl;
