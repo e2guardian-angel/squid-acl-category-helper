@@ -58,7 +58,7 @@ int main(int argc, char **argv) {
     port = helperConfig["port"].asString();
     stoi(port.c_str());
   } catch (std::exception e) {
-    cerr << "ERROR: host and/or port are missing or invalid" << endl;
+    cerr << "ERROR: helper section, host and/or port are missing or invalid" << endl;
     return -1;
   }
 
